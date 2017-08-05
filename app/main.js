@@ -1,7 +1,5 @@
 import Vue from 'vue';
-import app from './app.vue';
-
-console.log(app);
+import app from './components/app.vue';
 
 new Vue({
     el: '#app',
