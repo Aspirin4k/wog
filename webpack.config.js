@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: './app/main.js',
     output: {
-        path: __dirname,
+        path: __dirname + '/dist',
         filename: 'bundle.js'
     },
     module: {
@@ -33,6 +33,22 @@ module.exports = {
                     },
                     {
                         loader: 'sass-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.jpg$/,
+                use: [
+                    {
+                        loader: 'file-loader?name=images/[name].[ext]'
+                    }
+                ]
+            },
+            {
+                test: /\.json$/,
+                use: [
+                    {
+                        loader: 'json-loader'
                     }
                 ]
             }

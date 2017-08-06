@@ -6,10 +6,10 @@
         <div class="header-container__menu">
         <ul>
             <li>
-                <a>Игра</a>
+                <a><h2>Игра</h2></a>
             </li>
             <li>
-                <a>Проект</a>
+                <a><h2>Проект</h2></a>
             </li>
         </ul>
         </div>

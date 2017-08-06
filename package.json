@@ -4,12 +4,16 @@
   "description": "project task for summer school 2017",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack-dev-server --progress --content-base dist/"
   },
   "author": "roman ushakov",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
+    "image-webpack-loader": "^3.3.1",
+    "json-loader": "^0.5.7",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
@@ -19,6 +23,8 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
+    "axios": "^0.16.2",
+    "nconf": "^0.8.4",
     "vue": "^2.4.2"
   }
 }
