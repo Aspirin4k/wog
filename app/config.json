@@ -1,3 +1,4 @@
 {
-    "apiUrl": "http://localhost:1337/api/missions"
+    "apiUrl": "http://localhost:1337/api/missions",
+    "cardsDescLength": 250
 }

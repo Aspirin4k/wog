@@ -7,7 +7,8 @@
             :mission_description="card.mission_description"
             :game="card.game"
             :project="card.project"
-            thumbnail="..."
+            :thumbnail="card.thumbnail"
+            :date_of="card.date_of"
         ></mission-card>
     </div>
 </template>
