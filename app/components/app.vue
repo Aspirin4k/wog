@@ -16,6 +16,9 @@
           'app-header': header,
           'app-content': content,
           'app-footer': footer
+      },
+      created() {
+          this.$store.commit('queryCards', {});
       }
   }
 </script>

@@ -1,0 +1,61 @@
+@import './../../mixins.scss';
+
+.nav {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    &__option {
+        position: relative;
+
+        padding: 10px 20px;
+
+        transition: background 0.1s;
+
+        >a h2 {
+            transition: color 0.1s;
+        }
+
+        ul {
+            position: absolute;
+            left: -9999px;
+            margin-top: 10px;
+
+            opacity: 0;
+            transition: opacity 0.1s;
+            z-index: 100;
+            min-width: 100px;
+
+            li:first-child {
+                border-top: 2px solid black;
+            }
+
+            li {
+                padding: 7px 0 5px 7px;
+
+                background: url('./../../../resources/images/card_pattern.jpg');
+                line-height: 20px;
+
+                border-bottom: 2px solid black;
+            }
+
+            li:hover {
+                background: $bflike_orange;
+            }
+        }
+    }
+
+    &__option:hover {
+        cursor: pointer;
+        background: $bflike_orange;
+
+        >a h2 {
+            color: black;
+        }
+
+        ul {
+            left: 2px;
+            opacity: 1;
+        }
+    }
+}

@@ -26,30 +26,37 @@
     import noimage from './images/noimage.png';
 
     export default {
-        created() {
-            // Парсится дата в удобный для вывода формат
-            this.date_of_view = moment(this.date_of).format('DD.MM.YYYY');
-            switch(this.project) {
-                case 'wog': { this.project_view = 'WOG'; break; }
-                case 'miniwog': { this.project_view = 'miniWOG'; break; }
-            }
-            switch(this.game) {
-                case 'arma2': { this.game_view = './images/arma2.png'; break; }
-                case 'arma3': { this.game_view = './images/arma3.jpg'; break; }
-            }
-            if (this.mission_description.length > config.cardsDescLength) {
-                this.mission_description_view = 
-                this.mission_description.slice(0, config.cardsDescLength) + '...';
-            } else {
-                this.mission_description_view = this.mission_description;
-            }
-            if (!this.thumbnail) {
-                this.thumbnail_view = './images/noimage.png';
-            } else {
-                this.thumbnail_view = this.thumbnail;
+        props: ['game', 'project', 'mission_name', 'thumbnail', 'mission_description', 'date_of'],
+        computed: {
+            date_of_view: function() {
+                return moment(this.date_of).format('DD.MM.YYYY');
+            },
+            project_view: function() {
+                switch (this.project) {
+                    case 'wog': return 'WOG';
+                    case 'miniwog': return 'miniWOG';
+                }
+                return null;
+            },
+            game_view: function() {
+                switch (this.game) {
+                    case 'arma2': return './images/arma2.png';
+                    case 'arma3': return './images/arma3.jpg';
+                }
+            },
+            mission_description_view: function() {
+                if (this.mission_description.length > config.cardsDescLength) {
+                    return this.mission_description.slice(0, config.cardsDescLength) + '...';
+                }
+                return this.mission_description;
+            },
+            thumbnail_view: function() {
+                if (!this.thumbnail) {
+                    return './images/noimage.png';
+                }
+                return this.thumbnail;
             }
         },
-        props: ['game', 'project', 'mission_name', 'thumbnail', 'mission_description', 'date_of'],
         components: {
             'bflike-button': BFButton
         }

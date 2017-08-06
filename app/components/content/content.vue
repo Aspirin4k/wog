@@ -15,25 +15,15 @@
 
 <script>
     import missionCard from './../mission-card/mission-card.vue';
-    import axios from 'axios'
-    import config from './../../config.json';
 
     // По дефолту пустой массив
     // TODO: выводить сообщение "нет миссий" или что то вроде этого
     let cards = [];
     export default {
-        data: () => ({
-            'cards': cards
-        }),
-        created() {
-            // При загрузке компонента делаем запрос для получения списка миссий
-            let self = this;
-            axios.get(config.apiUrl)
-                .then(
-                    (res) => { 
-                        self.cards = res.data;
-                    })
-                .catch((err) => { console.log(err) });
+        computed: {
+            cards() {
+                return this.$store.state.cards;
+            }
         },
         components: {
             'mission-card': missionCard
