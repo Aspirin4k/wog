@@ -1,10 +1,10 @@
 <template>
     <ul class="nav">
         <li v-for="option in options" class="nav__option"> 
-            <a href="#"><h2>{{ option.opt_title }}</h2></a>
+            <a href="#"><h2>{{ $t(option.prop_name) }}</h2></a>
             <ul>
-                <li v-for="opt in option.opts" v-on:click="queryParamTaken(option.prop_name, opt.val)">
-                    <a href="#"><h4>{{ opt.opt_name }}</h4></a>
+                <li v-for="val in option.vals" v-on:click="queryParamTaken(option.prop_name, val)">
+                    <a href="#"><h4>{{ $t(val) }}</h4></a>
                 </li>
             </ul>
         </li>
@@ -15,9 +15,9 @@
     export default {
         props: ['options'],
         methods: {
-            queryParamTaken: function(opt_title, opt) {
+            queryParamTaken: function(opt_title, val) {
                 let param = {};
-                param[opt_title] = opt;
+                param[opt_title] = val;
                 
                 this.$emit('navClicked', param);
             }

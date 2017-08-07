@@ -1,0 +1,9 @@
+.mission-list-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: top;
+    justify-content: space-around;
+
+    width: 100%;
+}
