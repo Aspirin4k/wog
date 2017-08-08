@@ -4,25 +4,12 @@
             <div class="header-container__img"></div>
         </router-link>
         <div class="header-container__menu">
-            <dropdown-onhover
-            v-on:navClicked="queryCards"
-            :options="[
-            {
-                prop_name: 'game',
-                vals: [
-                    'arma2',
-                    'arma3'
-                ]
-            },
-            {
-                prop_name: 'project',
-                vals: [
-                    'wog',
-                    'miniwog'
-                ]
-            }
-            ]"
-        ></dropdown-onhover>
+            <router-link to="/">
+                <h2 class="header-container__menu__nav">Главная</h2>
+            </router-link>
+            <router-link to="/">
+                <h2 class="header-container__menu__nav">Статистика</h2>
+            </router-link>
         </div>
     </div>
 </template>
@@ -33,11 +20,6 @@
     export default {
         components: {
             'dropdown-onhover': dropdownOnhover
-        },
-        methods: {
-            queryCards(event) {
-                this.$store.commit('queryCards', event);
-            }
         },
         create() {
             this.$emit('');

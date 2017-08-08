@@ -1,0 +1,32 @@
+@import './../../mixins.scss';
+
+.tag-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+
+    padding: 2px 6px;
+
+    margin: 0 5px;
+
+    background: url('./images/tag_pattern.jpg');
+    border: 2px solid black;
+    
+    &__cross {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        margin-left: 10px;
+        margin-bottom: 1px;
+        margin-top: 1px;
+
+        border: 2px solid black;
+        width: 17px;
+        height: 17px;
+        box-sizing: border-box;
+        background: $bflike-orange;
+    }
+}

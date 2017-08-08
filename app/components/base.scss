@@ -1,23 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 @import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
+@import './mixins.scss';
 
 html,body {
     height: 100%;
     background: #fdfdfd;
 }
 
-h2, h3 {
+h2, h3, h4, h5 {
     font-family: 'Oswald', sans-serif;
-    color: white;
 }
 
 h2 {
     font-size: 120%;
+    color: white;
 }
 
 h3 {
     font-size: 130%;
     font-weight: 600;
+    color: white;
 }
 
 p {
@@ -25,12 +28,22 @@ p {
 }
 
 h4 {
-    font-family: 'Oswald', sans-serif;
     font-size: 120%;
     color: black;
+    display: inline-block;
+}
+
+h5 {
+    font-size: 180%;
+    font-weight: 500;
+    color: $bflike_orange;
 }
 
 a {
     text-decoration: none;
     outline: none;
+}
+
+.fa {
+    color: black;
 }

@@ -15,17 +15,18 @@ Vue.use(VueRouter);
 
 const store = new Vuex.Store({
     state: {
-        cards: []
+        cards: [],
+        selector: {}
     },
     mutations: {
-        queryCards(state, param) {
-            axios.get(config.apiUrl, {
-                params: param
-            })
-            .then(
-                    (res) => {
-                        state.cards = res.data;
-                    })
+        addQueryParam(state, param) {
+            state.selector[param.prop] = param.val;
+        },
+        removeQueryParam(state, param) {
+            delete state.selector[param];
+        },
+        setCards(state, newCards) {
+            state.cards = newCards;
         }
     }
 });

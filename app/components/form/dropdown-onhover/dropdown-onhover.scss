@@ -26,16 +26,14 @@
             z-index: 100;
             min-width: 100px;
 
-            li:first-child {
-                border-top: 2px solid black;
-            }
-
             li {
                 padding: 7px 0 5px 7px;
 
                 background: url('./../../../resources/images/card_pattern.jpg');
                 line-height: 20px;
 
+                border-left: 2px solid black;
+                border-right: 2px solid black;
                 border-bottom: 2px solid black;
             }
 
@@ -54,7 +52,7 @@
         }
 
         ul {
-            left: 2px;
+            left: 0;
             opacity: 1;
         }
     }

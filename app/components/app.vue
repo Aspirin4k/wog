@@ -9,19 +9,29 @@
 </template>
 
 <script>
-  import header from './header/header.vue';
-  import content from './content/content.vue';
-  import footer from './footer/footer.vue';
+    import axios from 'axios';
 
-  export default {
-      components: {
-          'app-header': header,
-          'app-content': content,
-          'app-footer': footer
-      },
-      created() {
-          this.$store.commit('queryCards', {});
-      }
+    import config from './../config.json';
+
+    import header from './header/header.vue';
+    import content from './content/content.vue';
+    import footer from './footer/footer.vue';
+
+    export default {
+        components: {
+            'app-header': header,
+            'app-content': content,
+            'app-footer': footer
+        },
+        created() {
+            axios.get(config.apiUrl, {
+                    params: this.$store.state.selector
+                })
+                .then(
+                        (res) => {
+                            this.$store.commit('setCards', res.data)
+                        })
+        }
   }
 </script>
 
