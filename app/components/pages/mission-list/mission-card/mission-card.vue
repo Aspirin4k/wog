@@ -12,7 +12,9 @@
             Проект: <span> {{ $t(mission_info.project) }} </span>
         </p>
         <p class="mission-card__description">{{ mission_description_view }}</p>
-        <bflike-button button_text="Подробнее"></bflike-button>
+        <div class="mission-card__button">
+            <bflike-button button_text="Подробнее"></bflike-button>
+        </div>
     </div>
 </template>
 

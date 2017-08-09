@@ -26,7 +26,7 @@
 
         <div class="mission-list-container__tags">
             <bflike-tag 
-                v-for="(filter, index) in filters()"
+                v-for="(filter, index) in filters"
                 :key="index"
                 :val="filter.prop"
                 :title="$t(filter.prop) + ': ' + $t(filter.val)"
@@ -63,6 +63,9 @@
         computed: {
             cards() {
                 return this.$store.state.cards;
+            },
+            filters() {
+                return this.$store.state.filters;
             }
         },
         methods: {
@@ -73,15 +76,6 @@
             removeQuery(val) {
                 this.$store.commit('removeQueryParam', val);
                 this.$store.dispatch('queryCards');
-            },
-            // т.к. этот массив не являтся реактивной зависимостью, он не будет обновляться,
-            // как вычисляемое свойство => необходимо реализовать как метод
-            filters() {
-                let filters = [];
-                for (let propName in this.$store.state.selector)
-                    filters.push({prop: propName, val: this.$store.state.selector[propName]});
-
-                return filters;
             }
         },
         components: {
