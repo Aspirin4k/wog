@@ -22,15 +22,6 @@
             'app-header': header,
             'app-content': content,
             'app-footer': footer
-        },
-        created() {
-            axios.get(config.apiUrl, {
-                    params: this.$store.state.selector
-                })
-                .then(
-                        (res) => {
-                            this.$store.commit('setCards', res.data)
-                        })
         }
   }
 </script>

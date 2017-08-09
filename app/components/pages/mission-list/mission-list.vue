@@ -36,6 +36,7 @@
         </div>
 
         <div class="mission-list-container__missions">
+            <p v-if="!cards.length">Упс, ничего не было найдено!</p>
             <mission-card
                     v-for="card in cards"
                     :key="card._id"
@@ -56,6 +57,9 @@
     import BFlikeTag from './../../form/bflike-tag/bflike-tag.vue';
 
     export default {
+        created() {
+            this.$store.dispatch('queryCards');
+        },
         computed: {
             cards() {
                 return this.$store.state.cards;
@@ -64,25 +68,11 @@
         methods: {
             queryCards(prop, val) {
                 this.$store.commit('addQueryParam', { prop: prop, val: val});
-                
-                axios.get(config.apiUrl, {
-                    params: this.$store.state.selector
-                })
-                .then(
-                        (res) => {
-                            this.$store.commit('setCards', res.data)
-                        })
+                this.$store.dispatch('queryCards');
             },
             removeQuery(val) {
                 this.$store.commit('removeQueryParam', val);
-
-                axios.get(config.apiUrl, {
-                    params: this.$store.state.selector
-                })
-                .then(
-                        (res) => {
-                            this.$store.commit('setCards', res.data)
-                        })
+                this.$store.dispatch('queryCards');
             },
             // т.к. этот массив не являтся реактивной зависимостью, он не будет обновляться,
             // как вычисляемое свойство => необходимо реализовать как метод
