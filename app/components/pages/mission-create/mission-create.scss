@@ -1,0 +1,26 @@
+.mission-create-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    margin: 10px 0;
+
+    &__title, &__input {
+        flex: 0 1 45%;
+    }
+
+    &__title {
+        font-size: 110%;
+        text-align: right;
+
+        margin-right: 10px;
+        margin-bottom: 4px;
+    }
+
+    &__input {
+        img {
+            margin-top: 5px;
+            border: 2px solid black;
+        }
+    }
+}

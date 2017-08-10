@@ -4,11 +4,14 @@
             <div class="header-container__img"></div>
         </router-link>
         <div class="header-container__menu">
-            <router-link to="/">
-                <h2 class="header-container__menu__nav">Главная</h2>
+            <router-link to="/" class="header-container__menu__nav">
+                <h2>Главная</h2>
             </router-link>
-            <router-link to="/">
-                <h2 class="header-container__menu__nav">Статистика</h2>
+            <router-link to="/" class="header-container__menu__nav">
+                <h2>Статистика</h2>
+            </router-link>
+            <router-link to="/create" class="header-container__menu__create">
+                <h2>Создать миссию</h2>
             </router-link>
         </div>
     </div>

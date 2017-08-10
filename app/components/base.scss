@@ -50,6 +50,48 @@ a {
     outline: none;
 }
 
+input[type="text"] {
+    font-family: 'Lato', sans-serif;
+    font-size: 90%;
+
+    width: 180px;
+    line-height: 22px;
+
+    padding: 0 3px;
+    border-radius: 0;
+    border: 1px solid grey;
+    outline: none;
+}
+
+input[type="file"] {
+    font-family: 'Lato', sans-serif;
+    font-size: 90%;
+
+    line-height: 22px;
+
+    border-radius: 0;;
+    outline: none;
+}
+
+.styled-select {
+    background: url('./../resources/images/select.png') no-repeat 95% 0;
+    border: 1px solid grey;
+    height: 22px;
+    width: 185px;
+    overflow: hidden;
+
+    select {
+        font-family: 'Lato', sans-serif;
+        font-size: 90%;
+        background: transparent;
+        border: none;
+        height: 22px;
+        line-height: 22px;
+        padding: 0;
+        width: 213px;
+    }
+}
+
 .fa {
     color: black;
 }

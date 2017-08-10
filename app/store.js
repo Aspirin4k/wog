@@ -33,6 +33,12 @@ const store = new Vuex.Store({
         },
         removeFirstException(state) {
             state.exceptions.splice(0,1);
+        },
+        setLoading(state, val) {
+            state.ajaxLoading = val;
+        },
+        throwException(state, msg) {
+            state.exceptions.push({msg: msg});
         }
     },
     actions: {

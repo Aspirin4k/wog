@@ -2,12 +2,13 @@
 
 .tag-container {
     display: flex;
+    position: relative;
     align-items: center;
-    justify-content: space-between; 
+    flex: 0 0 auto; 
 
     padding: 2px 6px;
 
-    margin: 0 5px;
+    margin: 5px 5px;
 
     background: url('./images/tag_pattern.jpg');
     border: 2px solid black;
