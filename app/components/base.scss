@@ -73,6 +73,21 @@ input[type="file"] {
     outline: none;
 }
 
+textarea {
+    font-family: 'Lato', sans-serif;
+    font-size: 90%;
+    line-height: 22px;
+
+    resize: none;
+    width: 100%;
+    min-height: 150px;
+
+    padding: 0 3px;
+    border-radius: 0;
+    border: 1px solid grey;
+    outline: none;
+}
+
 .styled-select {
     background: url('./../resources/images/select.png') no-repeat 95% 0;
     border: 1px solid grey;
@@ -94,4 +109,9 @@ input[type="file"] {
 
 .fa {
     color: black;
+}
+
+.small-text {
+    margin-top: 7px;
+    font-size: 60%;
 }

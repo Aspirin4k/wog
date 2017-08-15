@@ -14,7 +14,8 @@ const store = new Vuex.Store({
         selector: {},
         ajaxLoading: false,
         exceptions: [],
-        filters: []
+        filters: [],
+        detail_mission: {}
     },
     mutations: {
         addQueryParam(state, param) {
@@ -50,6 +51,21 @@ const store = new Vuex.Store({
                 .then(
                     (res) => {
                         context.state.cards = res.data;
+                        context.state.ajaxLoading = false;
+                    })
+                .catch(
+                    (err) => {
+                        context.state.exceptions.push({msg: err.message});
+                        context.state.ajaxLoading = false;
+                    }
+                )
+        },
+        queryCard(context, id) {
+            context.state.ajaxLoading = true;
+            axios.get(`${config.apiUrl}/${id}`)
+                .then(
+                    (res) => {
+                        context.state.detail_mission = res.data.mission;
                         context.state.ajaxLoading = false;
                     })
                 .catch(

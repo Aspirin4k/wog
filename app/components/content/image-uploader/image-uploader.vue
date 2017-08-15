@@ -11,6 +11,7 @@
             type="file" 
             @change="proccessFile($event)"
             ref="uploadButton"
+            accept=".jpg, .jpeg, .png"
         >
         <div class="image-uploader-container__tags">
             <bflike-tag
