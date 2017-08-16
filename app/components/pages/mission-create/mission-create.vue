@@ -15,7 +15,7 @@
                 <div class="mission-create-container__row__input">
                     <input 
                         v-model="mission.mission_name" 
-                        v-validate.initial="'required'" 
+                        v-validate="'required'" 
                         name="mission_name" 
                         type="text">
                     <div v-if="errors.first('mission_name')" class="error-msg">
@@ -170,21 +170,8 @@
     import config from './../../../config.json';
 
     export default {
-        data() {
-            return {
-                mission: {
-                    mission_name: "",
-                    mission_description: "",
-                    game: "arma3",
-                    project: "wog",
-                    thumbnail: "",
-                    task_blue: "",
-                    task_red: "",
-                    task_green: "",
-                    conventions: "",
-                    screenshots: []
-                }
-            }
+        created() {
+            this.loadMission();
         },
         components: {
             'content-block': contentBlock,
@@ -192,29 +179,65 @@
             'bflike-button': BFLikeButton
         },
         computed: {
-            tasks() {
-
+            mission() {
+                if (!this.$route.params.id)
+                {
+                    return {
+                        mission_name: "",
+                        mission_description: "",
+                        game: "arma3",
+                        project: "wog",
+                        thumbnail: "",
+                        task_blue: "",
+                        task_red: "",
+                        task_green: "",
+                        conventions: "",
+                        screenshots: []
+                    }
+                }
+                else {
+                    return this.$store.state.detail_mission;
+                }
             }
         },
         methods: {
+            loadMission() {
+                if (this.$route.params.id) {
+                    this.$store.dispatch('queryCard', 
+                        {
+                            id: this.$route.params.id,
+                            onErrorOk: () => {
+                                this.$router.push({
+                                    name: 'main', 
+                                    params: { redirect400: true }
+                                }); 
+                            }
+                        });
+                }
+            },
             uploaded(event) {
                 this.$store.commit('setLoading', false);
                 if (!event.response && !event[0] || event.response && event.response.status != 200)
                 {
-                    this.$store.commit('throwException', 
-                        event.response ? event.response.statusText : event.message);
+                    this.$store.commit('pushModalMessage', {
+                        title: 'Ошибка',
+                        msg: event.response ? event.response.statusText : event.message
+                    });
                 }
                 else
                 {
                     this.mission.thumbnail = event[0].data.url;
+                    this.$forceUpdate();
                 }
             },
             uploadedScreenshots(event) {
                 this.$store.commit('setLoading', false);
                 if (!event.response && !event[0] || event.response && event.response.status != 200)
                 {
-                    this.$store.commit('throwException', 
-                        event.response ? event.response.statusText : event.message);
+                    this.$store.commit('pushModalMessage', {
+                        title: 'Ошибка',
+                        msg: event.response ? event.response.statusText : event.message
+                    });
                 }
                 else
                 {
@@ -222,30 +245,107 @@
                 }
             },
             postData() {
-                if (this.mission.mission_name) {
-                    this.$store.commit('setLoading', true);
+                this.$validator.validateAll().then((res) => {
+                    if (res) {
+                        this.$store.commit('setLoading', true);
 
-                    axios.post(
-                        config.apiUrl,
-                        {
-                            mission_name: this.mission.mission_name,
-                            mission_description: this.mission.mission_description,
-                            thumbnail: this.mission.thumbnail,
-                            game: this.mission.game,
-                            project: this.mission.project,
-                            task_blue: this.mission.task_blue,
-                            task_green: this.mission.task_green,
-                            task_red: this.mission.task_red,
-                            screenshots: this.mission.screenshots
+                        if (!this.$route.params.id) {
+                            axios.post(
+                                config.apiUrl,
+                                {
+                                    mission_name: this.mission.mission_name,
+                                    mission_description: this.mission.mission_description,
+                                    thumbnail: this.mission.thumbnail,
+                                    game: this.mission.game,
+                                    project: this.mission.project,
+                                    task_blue: this.mission.task_blue,
+                                    task_green: this.mission.task_green,
+                                    task_red: this.mission.task_red,
+                                    screenshots: this.mission.screenshots
+                                }
+                            ).then((res) => { 
+                                this.$store.commit('setLoading', false);
+                                this.$router.push('/');
+                            })
+                            .catch((err) => { 
+                                this.$store.commit('setLoading', false);
+                                this.$store.commit('pushModalMessage', {
+                                    title: 'Ошибка',
+                                    msg: err.response ? err.response.statusText : err.message
+                                });
+                            });
                         }
-                    ).then((res) => { 
-                        this.$store.commit('setLoading', false);
-                        this.$router.push('/');
-                    })
-                    .catch((err) => { 
-                        this.$store.commit('setLoading', false);
-                        this.$store.commit('throwException', err.response.statusText);
-                    });
+                        else
+                        {
+                            axios.put(
+                                `${config.apiUrl}/${this.$route.params.id}`,
+                                {
+                                    mission_name: this.mission.mission_name,
+                                    mission_description: this.mission.mission_description,
+                                    thumbnail: this.mission.thumbnail,
+                                    game: this.mission.game,
+                                    project: this.mission.project,
+                                    task_blue: this.mission.task_blue,
+                                    task_green: this.mission.task_green,
+                                    task_red: this.mission.task_red,
+                                    screenshots: this.mission.screenshots
+                                }
+                            ).then((res) => { 
+                                this.$store.commit('setLoading', false);
+                                this.$router.push('/');
+                            })
+                            .catch((err) => { 
+                                this.$store.commit('setLoading', false);
+                                this.$store.commit('pushModalMessage', {
+                                    title: 'Ошибка',
+                                    msg: err.response ? err.response.statusText : err.message
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+        },
+        beforeRouteUpdate(to, from, next) {
+            this.$store.commit('pushModalMessage',{
+                id: 'editLeave',
+                title: 'Подтвердите действие',
+                msg: 'Несохраненные изменения будут потеряны. Продолжить?',
+                onOk: () => { 
+                    next();
+                },
+                onCancel: () => {
+                    next(false);
+                }
+            });
+        },
+        beforeRouteLeave(to, from, next) {
+            // Если редирект произошел не по причине ошибки (т.е. пользователем)
+            if (!to.params.redirect400)
+            {
+                this.$store.commit('pushModalMessage', {
+                    id: 'editLeave',
+                    title: 'Подтвердите действие',
+                    msg: 'Несохраненные изменения будут потеряны. Продолжить?',
+                    onOk: () => { 
+                        next();
+                    },
+                    onCancel: () => {
+                        next(false);
+                    }
+                });
+            }
+            else
+            {
+                next();
+            }
+        },
+        watch: {
+            '$route' (to, from) {
+                switch(to.name) {
+                    case 'edit':
+                        this.loadMission();
+                        break;
                 }
             }
         }

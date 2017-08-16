@@ -18,10 +18,19 @@
             </div>
 
             <div class="popup-container__window__footer">
-                <bflike-button 
-                    button_text="ОК"
-                    v-on:buttonClicked="okClicked">
-                </bflike-button>
+                <div class="popup-container__window__footer__button">
+                    <bflike-button 
+                        button_text="ОК"
+                        v-on:buttonClicked="okClicked">
+                    </bflike-button>
+                </div>
+                <div class="popup-container__window__footer__button">
+                    <bflike-button
+                        v-if="cancelClicked"
+                        button_text="Отмена"
+                        v-on:buttonClicked="cancelClicked">
+                    </bflike-button>
+                </div>
             </div>
         </div>
     </div>
@@ -31,7 +40,7 @@
     import BFLikeButton from './../../form/bflike-button/bflike-button.vue';
 
     export default {
-        props: ['okClicked'],
+        props: ['okClicked', 'cancelClicked'],
         components: {
             'bflike-button': BFLikeButton
         }

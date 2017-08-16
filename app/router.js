@@ -9,9 +9,12 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
-        { path: '/', component: missionList },
-        { path: '/create', component: missionCreate },
-        { path: '/detail/:id', component: missionDetail}
+        { path: '/', component: missionList, name: 'main' },
+        { path: '/create', component: missionCreate, name: 'create' },
+        { path: '/detail/:id', component: missionDetail, name: 'detail' },
+        { path: '/edit/:id', component: missionCreate, name: 'edit' },
+        { path: '/edit', redirect: '/create' },
+        { path: '/detail', redirect: '/' }
     ]
 });
 

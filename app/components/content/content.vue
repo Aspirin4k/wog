@@ -3,8 +3,11 @@
         <div class="content-container__loading" v-if="loading">
             <img src='./images/Spinner.svg'></img>
         </div>
-        <popup-window v-if="error" :okClicked="closeErrorModal">
-            <span slot="header">Ошибка</span>
+        <popup-window v-if="error" 
+            :okClicked="error.onOk"
+            :cancelClicked="error.onCancel"
+        >
+            <span slot="header">{{ error.title }}</span>
             <span slot="body">{{ error.msg }}</span>
         </popup-window>
         <slot></slot>
@@ -23,12 +26,12 @@
                 return this.$store.state.ajaxLoading 
             },
             error() {
-                return this.$store.state.exceptions[0];
+                return this.$store.state.modal_messages[0];
             }
         },
-        methods: {
-            closeErrorModal() {
-                this.$store.commit('removeFirstException');
+        watch: {
+            '$route' (to, from) {
+                this.$store.commit('clearModalMessages');
             }
         }
     }
