@@ -171,7 +171,7 @@
 
     export default {
         created() {
-            this.loadMission();
+            this.loadMission(this.$route.params.id);
         },
         components: {
             'content-block': contentBlock,
@@ -201,15 +201,15 @@
             }
         },
         methods: {
-            loadMission() {
-                if (this.$route.params.id) {
+            loadMission(id) {
+                if (id) {
                     this.$store.dispatch('queryCard', 
                         {
-                            id: this.$route.params.id,
+                            id: id,
                             onErrorOk: () => {
                                 this.$router.push({
                                     name: 'main', 
-                                    params: { redirect400: true }
+                                    params: { redirect: true }
                                 }); 
                             }
                         });
@@ -245,10 +245,12 @@
                 }
             },
             postData() {
+                // Происходит проверка корректности заполнения формы
                 this.$validator.validateAll().then((res) => {
                     if (res) {
                         this.$store.commit('setLoading', true);
-
+                        // В зависимости от того, находимся ли мы на странице редактирования или создания
+                        // выполняется либо пост, либо пут
                         if (!this.$route.params.id) {
                             axios.post(
                                 config.apiUrl,
@@ -265,7 +267,10 @@
                                 }
                             ).then((res) => { 
                                 this.$store.commit('setLoading', false);
-                                this.$router.push('/');
+                                this.$router.push({
+                                    name: 'main', 
+                                    params: { redirect: true }
+                                }); 
                             })
                             .catch((err) => { 
                                 this.$store.commit('setLoading', false);
@@ -292,7 +297,10 @@
                                 }
                             ).then((res) => { 
                                 this.$store.commit('setLoading', false);
-                                this.$router.push('/');
+                                this.$router.push({
+                                    name: 'main', 
+                                    params: { redirect: true }
+                                }); 
                             })
                             .catch((err) => { 
                                 this.$store.commit('setLoading', false);
@@ -311,7 +319,8 @@
                 id: 'editLeave',
                 title: 'Подтвердите действие',
                 msg: 'Несохраненные изменения будут потеряны. Продолжить?',
-                onOk: () => { 
+                onOk: () => {
+                    this.loadMission(to.params.id);
                     next();
                 },
                 onCancel: () => {
@@ -321,7 +330,7 @@
         },
         beforeRouteLeave(to, from, next) {
             // Если редирект произошел не по причине ошибки (т.е. пользователем)
-            if (!to.params.redirect400)
+            if (!to.params.redirect)
             {
                 this.$store.commit('pushModalMessage', {
                     id: 'editLeave',
@@ -338,15 +347,6 @@
             else
             {
                 next();
-            }
-        },
-        watch: {
-            '$route' (to, from) {
-                switch(to.name) {
-                    case 'edit':
-                        this.loadMission();
-                        break;
-                }
             }
         }
     }

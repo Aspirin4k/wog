@@ -3,7 +3,7 @@
         <content-block title="Фильтры">
             <div>
                 <dropdown-onhover
-                v-on:navClicked="queryCards"
+                v-on:navClicked="addQueryParam"
                 :options="[
                 {
                     prop_name: 'game',
@@ -57,6 +57,7 @@
     import BFlikeTag from './../../form/bflike-tag/bflike-tag.vue';
 
     export default {
+        // ажакс делаем единожды при создании компонента
         created() {
             this.$store.dispatch('queryCards');
         },
@@ -69,7 +70,12 @@
             }
         },
         methods: {
-            queryCards(prop, val) {
+            // дополнительные запросы при изменении параметров выборки
+            // TODO: подумать об оптимизации
+            // С другой стороны, если на странице ограниченное количество карт, то
+            // имеет смысл делать запрос по N карт при открытии страницы - в результате
+            // при изменении фильтров все равно придется подтягивать инфу с апи
+            addQueryParam(prop, val) {
                 this.$store.commit('addQueryParam', { prop: prop, val: val});
                 this.$store.dispatch('queryCards');
             },

@@ -86,6 +86,8 @@ const store = new Vuex.Store({
             state.ajaxLoading = val;
         },
         deleteMission(state, id) {
+            console.log(state.cards.findIndex(
+                (element) => { return id === element._id; }));
             state.cards.splice(state.cards.findIndex(
                 (element) => { return id === element._id; }
             ), 1);
@@ -93,14 +95,14 @@ const store = new Vuex.Store({
     },
     actions: {
         queryCards(context) {
-            context.state.ajaxLoading = true;
+            context.commit('setLoading', true);
             axios.get(config.apiUrl, {
                     params: context.state.selector
                 })
                 .then(
                     (res) => {
                         context.state.cards = res.data;
-                        context.state.ajaxLoading = false;
+                        context.commit('setLoading', false);
                     })
                 .catch(
                     (err) => {
@@ -108,7 +110,7 @@ const store = new Vuex.Store({
                             title: 'Ошибка',
                             msg: err.message
                         });
-                        context.state.ajaxLoading = false;
+                        context.commit('setLoading', false);
                     }
                 )
         },
@@ -117,12 +119,12 @@ const store = new Vuex.Store({
         queryCard(context, params) {
             if (context.state.detail_mission.id === params.id) return;
 
-            context.state.ajaxLoading = true;
+            context.commit('setLoading', true);
             axios.get(`${config.apiUrl}/${params.id}`)
                 .then(
                     (res) => {
                         context.state.detail_mission = res.data.mission;
-                        context.state.ajaxLoading = false;
+                        context.commit('setLoading', false);
                     })
                 .catch(
                     (err) => {
@@ -132,7 +134,7 @@ const store = new Vuex.Store({
                             msg: err.message,
                             onOk: params.onErrorOk
                         });
-                        context.state.ajaxLoading = false;
+                        context.commit('setLoading', false);
                     }
                 )
         }

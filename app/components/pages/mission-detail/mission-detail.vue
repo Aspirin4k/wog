@@ -72,19 +72,28 @@
                     });
             },
             deleteMission() {
-                this.$store.commit('setLoading', true);
-                var id = this.$route.params.id;
-                axios.delete(`${config.apiUrl}/${id}`)
-                    .then((res) => {
-                        this.$store.commit('setLoading', false);
-                        this.$store.commit('deleteMission', id);
-                    })
-                    .catch((err) => { 
-                        this.$store.commit('setLoading', false);
-                        console.log(err);
-                        this.$store.commit('pushModalMessage', err.response.statusText);
-                    });
-                this.$router.push('/');
+                this.$store.commit('pushModalMessage', {
+                    id: 'deleteStarted',
+                    title: 'Подтвердите действие',
+                    msg: 'Удаление безвозвратно. Продолжить?',
+                    onOk: () => {
+                        this.$store.commit('setLoading', true);
+                        var id = this.$route.params.id;
+                        axios.delete(`${config.apiUrl}/${id}`)
+                            .then((res) => {
+                                this.$store.commit('setLoading', false);
+                                this.$store.commit('deleteMission', id);
+                                this.$router.push('/');
+                            })
+                            .catch((err) => { 
+                                this.$store.commit('setLoading', false);
+                                this.$store.commit('pushModalMessage', err.response.statusText);
+                            });
+                    },
+                    onCancel: () => {
+
+                    }
+                });
             },
             editMission() {
                 this.$router.push(`/edit/${this.$route.params.id}`);
