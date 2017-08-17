@@ -1,10 +1,16 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// TODO: несколько точек входа?
 module.exports = {
-    entry: './app/main.js',
+    entry: {
+        app: './app/main.js'
+    }, 
     output: {
         path: __dirname + '/dist',
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     module: {
         rules: [
@@ -19,6 +25,17 @@ module.exports = {
                                 scss: 'vue-style-loader!css-loader!sass-loader'
                             }
                         }
+                    }
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: [
+                    __dirname + '/node_modules'
+                ],
+                use: [
+                    {
+                        loader: 'babel-loader'
                     }
                 ]
             },
@@ -51,7 +68,7 @@ module.exports = {
                 test: /\.(jpg|png|gif|svg)$/,
                 use: [
                     {
-                        loader: 'file-loader?name=images/[name].[ext]'
+                        loader: 'file-loader?name=images/[hash].[ext]'
                     }
                 ]
             },
@@ -66,6 +83,24 @@ module.exports = {
         ]
     },
     resolve: {
+        modules: ['node_modules'],
+        extensions: ['.js','.vue','*'],
         alias: { vue: 'vue/dist/vue.js' }
-    }
+    },
+    plugins: [
+        new webpack.NoEmitOnErrorsPlugin()
+    ],
+    devtool: NODE_ENV === 'development' ? 'eval-source-map' : false
+}
+
+if (NODE_ENV === 'production') {
+    module.exports.plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings:       false,
+                drop_console:   true,
+                unsafe:         true
+            }
+        })
+    )
 }
