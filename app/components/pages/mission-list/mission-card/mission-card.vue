@@ -38,8 +38,8 @@
             },
             game_view: function() {
                 switch (this.mission_info.game) {
-                    case 'arma2': return './images/arma2.png';
-                    case 'arma3': return './images/arma3.jpg';
+                    case 'arma2': return arma2;
+                    case 'arma3': return arma3;
                 }
             },
             mission_description_view: function() {
@@ -50,7 +50,7 @@
             },
             thumbnail_view: function() {
                 if (!this.mission_info.thumbnail) {
-                    return './images/noimage.png';
+                    return noimage;
                 }
                 return this.mission_info.thumbnail;
             }

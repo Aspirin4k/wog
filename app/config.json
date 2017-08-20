@@ -1,7 +1,5 @@
 {
     "apiUrl": "http://localhost:1337/api/missions",
-    "apiImageUrl": "https://api.cloudinary.com/v1_1/dacpvzkym/image/upload",
-    "apiImageKey": "774224564777463",
-    "apiImageSecret": "19zOjRs7lFV-Hl5cD48MDFPFKes",
+    "imageUrl": "http://localhost:1337/api/images",
     "cardsDescLength": 250
 }

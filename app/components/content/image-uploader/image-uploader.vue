@@ -36,7 +36,6 @@
 
 <script>
     import axios from 'axios';
-    import sha1 from 'js-sha1';
     import PromiseFileReader from 'promise-file-reader';
 
     import BFLikeTag from './../../form/bflike-tag/bflike-tag.vue';
@@ -93,18 +92,10 @@
                 Promise.all(fPromises).then((results) => {
                     results.forEach(
                         (result) => {
-                            var hash = sha1.create();
-                            var timestamp = new Date().getTime();
-                            var query = `timestamp=${timestamp}${config.apiImageSecret}`;
-                            hash.update(query);
-
                             var aPromise = axios.post(
-                                config.apiImageUrl,
+                                config.imageUrl,
                                 {
-                                    file: result,
-                                    api_key: config.apiImageKey,
-                                    timestamp: timestamp,
-                                    signature: hash.hex()
+                                    image: result
                                 }
                             )
 

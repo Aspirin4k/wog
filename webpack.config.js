@@ -1,5 +1,8 @@
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const webpack                   = require('webpack');
+const BundleAnalyzerPlugin      = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackPlugin         = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const CleanWebpackPlugin        = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -10,7 +13,7 @@ module.exports = {
     }, 
     output: {
         path: __dirname + '/dist',
-        filename: '[name].js'
+        filename: '[name].[chunkhash].js'
     },
     module: {
         rules: [
@@ -35,7 +38,10 @@ module.exports = {
                 ],
                 use: [
                     {
-                        loader: 'babel-loader'
+                        loader: 'babel-loader',
+                        options: {
+                            plugins: NODE_ENV === 'production' ? ['transform-runtime'] : []
+                        }
                     }
                 ]
             },
@@ -88,9 +94,21 @@ module.exports = {
         alias: { vue: 'vue/dist/vue.js' }
     },
     plugins: [
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'Trash',
+            template: 'app/index.ejs',
+            inject: true,
+        }),
+        new HtmlWebpackHarddiskPlugin(),
+        new webpack.ContextReplacementPlugin( /node_modules\/moment\/locale/, /en-gb/)
     ],
-    devtool: NODE_ENV === 'development' ? 'eval-source-map' : false
+    devtool: NODE_ENV === 'development' ? 'eval-source-map' : false,
+
+    devServer: {
+        contentBase: [ __dirname + '/dist/'],
+        watchContentBase: true
+    }
 }
 
 if (NODE_ENV === 'production') {
@@ -101,6 +119,12 @@ if (NODE_ENV === 'production') {
                 drop_console:   true,
                 unsafe:         true
             }
-        })
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: __dirname + '/dist/report.html',
+            openAnalyzer: true
+        }),
+        new CleanWebpackPlugin(['dist'])
     )
 }

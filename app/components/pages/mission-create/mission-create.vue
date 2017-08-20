@@ -219,9 +219,13 @@
                 this.$store.commit('setLoading', false);
                 if (!event.response && !event[0] || event.response && event.response.status != 200)
                 {
+                    let error = 
+                        event.response ?
+                        event.response.data.error ? event.response.data.error : event.response.statusText :
+                        event.message;
                     this.$store.commit('pushModalMessage', {
                         title: 'Ошибка',
-                        msg: event.response ? event.response.statusText : event.message
+                        msg: error
                     });
                 }
                 else
@@ -234,14 +238,19 @@
                 this.$store.commit('setLoading', false);
                 if (!event.response && !event[0] || event.response && event.response.status != 200)
                 {
+                    let error = 
+                        event.response ?
+                        event.response.data.error ? event.response.data.error : event.response.statusText :
+                        event.message;
                     this.$store.commit('pushModalMessage', {
                         title: 'Ошибка',
-                        msg: event.response ? event.response.statusText : event.message
+                        msg: error
                     });
                 }
                 else
                 {
                     event.forEach((screenshot) => { this.mission.screenshots.push(screenshot.data.url)});
+                    this.$forceUpdate();
                 }
             },
             postData() {
