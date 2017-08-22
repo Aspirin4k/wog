@@ -1,7 +1,6 @@
 const webpack                   = require('webpack');
 const BundleAnalyzerPlugin      = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin         = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const CleanWebpackPlugin        = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -100,7 +99,6 @@ module.exports = {
             template: 'app/index.ejs',
             inject: true,
         }),
-        new HtmlWebpackHarddiskPlugin(),
         new webpack.ContextReplacementPlugin( /node_modules\/moment\/locale/, /en-gb/)
     ],
     devtool: NODE_ENV === 'development' ? 'eval-source-map' : false,

@@ -21,7 +21,13 @@
                     class="mission-detail-container__content__thumbnail"
                     :src="info.thumbnail"
                 ></img>
-                <p>Игра: </p>
+                <p>Игра: {{ $t(info.game) }}</p>
+                <p>Проект: {{ $t(info.project) }}</p>
+                <p>Вводная: {{ info.mission_description ? info.mission_description : "Нет данных" }}</p>
+                <p>Задача синих: {{ info.task_blue ? info.task_blue : "Нет данных" }}</p>
+                <p>Задача красных: {{ info.task_red ? info.task_red : "Нет данных" }}</p>
+                <p>Задача зеленых: {{ info.task_green ? info.task_green : "Нет данных" }}</p>
+                <p>Условности: {{ info.conventions ? info.conventions : "Нет данных" }}</p>
             </div>
         </content-block>
 
