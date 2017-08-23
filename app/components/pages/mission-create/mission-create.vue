@@ -254,6 +254,7 @@
                 }
             },
             postData() {
+                console.log(this.mission.task_blue);
                 // Происходит проверка корректности заполнения формы
                 this.$validator.validateAll().then((res) => {
                     if (res) {
@@ -272,7 +273,8 @@
                                     task_blue: this.mission.task_blue,
                                     task_green: this.mission.task_green,
                                     task_red: this.mission.task_red,
-                                    screenshots: this.mission.screenshots
+                                    screenshots: this.mission.screenshots,
+                                    conventions: this.mission.conventions
                                 }
                             ).then((res) => { 
                                 this.$store.commit('setLoading', false);
@@ -302,7 +304,8 @@
                                     task_blue: this.mission.task_blue,
                                     task_green: this.mission.task_green,
                                     task_red: this.mission.task_red,
-                                    screenshots: this.mission.screenshots
+                                    screenshots: this.mission.screenshots,
+                                    conventions: this.mission.conventions
                                 }
                             ).then((res) => { 
                                 this.$store.commit('setLoading', false);

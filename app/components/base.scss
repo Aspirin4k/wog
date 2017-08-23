@@ -87,6 +87,10 @@ textarea {
     outline: none;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
 .styled-select {
     background: url('./../resources/images/select.png') no-repeat 95% 0;
     border: 1px solid grey;
