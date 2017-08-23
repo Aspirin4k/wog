@@ -116,7 +116,8 @@ if (NODE_ENV === 'production') {
                 warnings:       false,
                 drop_console:   true,
                 unsafe:         true
-            }
+            },
+            comments: false
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
