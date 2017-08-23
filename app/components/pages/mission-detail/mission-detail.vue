@@ -18,16 +18,17 @@
         <content-block :title="info.mission_name">
             <div class="mission-detail-container__content">
                 <img
+                    v-if="info.thumbnail"
                     class="mission-detail-container__content__thumbnail"
                     :src="info.thumbnail"
                 ></img>
-                <p>Игра: {{ $t(info.game) }}</p>
-                <p>Проект: {{ $t(info.project) }}</p>
-                <p>Вводная: {{ info.mission_description ? info.mission_description : "Нет данных" }}</p>
-                <p>Задача синих: {{ info.task_blue ? info.task_blue : "Нет данных" }}</p>
-                <p>Задача красных: {{ info.task_red ? info.task_red : "Нет данных" }}</p>
-                <p>Задача зеленых: {{ info.task_green ? info.task_green : "Нет данных" }}</p>
-                <p>Условности: {{ info.conventions ? info.conventions : "Нет данных" }}</p>
+                <p class="wall-of-text"><span class="bold-text">Игра:</span> {{ $t(info.game) }}</p>
+                <p class="wall-of-text"><span class="bold-text">Проект:</span> {{ $t(info.project) }}</p>
+                <p class="wall-of-text"><span class="bold-text">Вводная:</span> {{ info.mission_description ? info.mission_description : "Нет данных" }}</p>
+                <p class="wall-of-text"><span class="bold-text">Задача синих:</span> {{ info.task_blue ? info.task_blue : "Нет данных" }}</p>
+                <p class="wall-of-text"><span class="bold-text">Задача красных:</span> {{ info.task_red ? info.task_red : "Нет данных" }}</p>
+                <p class="wall-of-text"><span class="bold-text">Задача зеленых:</span> {{ info.task_green ? info.task_green : "Нет данных" }}</p>
+                <p class="wall-of-text"><span class="bold-text">Условности:</span> {{ info.conventions ? info.conventions : "Нет данных" }}</p>
             </div>
         </content-block>
 
@@ -91,9 +92,19 @@
                                 this.$store.commit('deleteMission', id);
                                 this.$router.push('/');
                             })
-                            .catch((err) => { 
+                            .catch((err) => {
+                                let error = 
+                                    err.response ?
+                                    err.response.data.error ? err.response.data.error : err.response.statusText :
+                                    err.message;
                                 this.$store.commit('setLoading', false);
-                                this.$store.commit('pushModalMessage', err.response.statusText);
+                                this.$store.commit('pushModalMessage', {
+                                    title: "Ошибка",
+                                    msg: error,
+                                    onOk: () => {
+                                        this.$router.push('/');
+                                    }
+                                });
                             });
                     },
                     onCancel: () => {
