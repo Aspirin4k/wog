@@ -59,7 +59,7 @@
     export default {
         // ажакс делаем единожды при создании компонента
         created() {
-            this.$store.dispatch('queryCards');
+            // this.$store.dispatch('queryCards');
         },
         computed: {
             cards() {
@@ -77,11 +77,11 @@
             // при изменении фильтров все равно придется подтягивать инфу с апи
             addQueryParam(prop, val) {
                 this.$store.commit('addQueryParam', { prop: prop, val: val});
-                this.$store.dispatch('queryCards');
+                // this.$store.dispatch('queryCards');
             },
             removeQuery(val) {
                 this.$store.commit('removeQueryParam', val);
-                this.$store.dispatch('queryCards');
+                // this.$store.dispatch('queryCards');
             }
         },
         components: {

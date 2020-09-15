@@ -10,9 +10,9 @@
             <router-link to="/" class="header-container__menu__nav">
                 <h2>Статистика</h2>
             </router-link>
-            <router-link to="/create" class="header-container__menu__create">
-                <h2>Создать миссию</h2>
-            </router-link>
+            <a v-on:click="authorize" class="header-container__menu__create">
+                <h2>Авторизоваться</h2>
+            </a>
         </div>
     </div>
 </template>
@@ -26,6 +26,11 @@
         },
         create() {
             this.$emit('');
+        },
+        methods: {
+          authorize() {
+            XL.show();
+          }
         }
     }
 </script>
