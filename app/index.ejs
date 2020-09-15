@@ -17,8 +17,9 @@
       s.addEventListener('load', function () {
         XL.init({
           projectId: 'cead843a-68bc-11e9-9244-42010aa80004',
-          callbackUrl: 'https://rushakov.com?test=test',
-          locale: 'en_XX'
+          callbackUrl: 'https://rushakov.com',
+          locale: 'en_XX',
+          payload: {test: "test"}
         });
 
       }, false);
